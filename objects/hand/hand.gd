@@ -12,7 +12,17 @@ var viewport_position: Vector2
 
 func _physics_process(DELTA: float) -> void:
 	update_viewport_position(DELTA)
-	position = get_viewport().get_camera_3d().project_position(viewport_position, 5.0)
+
+func _process(_DELTA: float) -> void:
+	position = get_hand_position()
 
 func update_viewport_position(DELTA: float) -> void:
 	viewport_position += Input.get_vector("left", "right", "up", "down") * 100 * DELTA
+
+func get_hand_position() -> Vector3:
+	var CAMERA := get_viewport().get_camera_3d()
+	var from = CAMERA.project_ray_origin(viewport_position)
+	var dir = CAMERA.project_ray_normal(viewport_position)
+	var Y_POSITION := 0.0
+	var t = (Y_POSITION - from.y) / dir.y
+	return from + dir * t
