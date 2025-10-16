@@ -1,0 +1,16 @@
+[gd_scene load_steps=3 format=3 uid="uid://bqkwal15168rq"]
+
+[ext_resource type="Script" uid="uid://c44j5opuykt5w" path="res://subscreen/subscreen.gd" id="1_veg5d"]
+[ext_resource type="Script" uid="uid://dluwrqmdb6xx8" path="res://subscreen/root_handler.gd" id="2_jndkm"]
+
+[node name="Subscreen" type="Node" node_paths=PackedStringArray("SUB_VIEWPORT_CONTAINER")]
+script = ExtResource("1_veg5d")
+SUBSCREEN_RESOLUTIONS = Array[Vector2i]([Vector2i(320, 200)])
+SUB_VIEWPORT_CONTAINER = NodePath("SubViewportContainer")
+
+[node name="SubViewportContainer" type="SubViewportContainer" parent="."]
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="RootHandler" type="SubViewport" parent="SubViewportContainer"]
+script = ExtResource("2_jndkm")
