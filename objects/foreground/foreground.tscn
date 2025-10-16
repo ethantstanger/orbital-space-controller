@@ -1,0 +1,13 @@
+[gd_scene load_steps=2 format=3 uid="uid://cuuh0ywoow1uy"]
+
+[ext_resource type="PackedScene" uid="uid://xntl8ohpl6vh" path="res://objects/hand/hand.tscn" id="1_sjppg"]
+
+[node name="Foreground" type="SubViewport"]
+transparent_bg = true
+
+[node name="Node3D" type="Node3D" parent="."]
+
+[node name="Camera3D" type="Camera3D" parent="Node3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 1.2522181)
+
+[node name="Hand" parent="Node3D" instance=ExtResource("1_sjppg")]

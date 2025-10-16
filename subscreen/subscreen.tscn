@@ -1,16 +1,31 @@
-[gd_scene load_steps=3 format=3 uid="uid://bqkwal15168rq"]
+[gd_scene load_steps=4 format=3 uid="uid://bqkwal15168rq"]
 
-[ext_resource type="Script" uid="uid://c44j5opuykt5w" path="res://subscreen/subscreen.gd" id="1_veg5d"]
-[ext_resource type="Script" uid="uid://dluwrqmdb6xx8" path="res://subscreen/root_handler.gd" id="2_jndkm"]
+[ext_resource type="Script" uid="uid://bpm025oe8mtdl" path="res://subscreen/subscreen_container.gd" id="1_veg5d"]
+[ext_resource type="PackedScene" uid="uid://xntl8ohpl6vh" path="res://objects/hand/hand.tscn" id="2_jndkm"]
+[ext_resource type="Texture2D" uid="uid://cma5r4g8kyj0i" path="res://icon.svg" id="2_rdl34"]
 
-[node name="Subscreen" type="Node" node_paths=PackedStringArray("SUB_VIEWPORT_CONTAINER")]
-script = ExtResource("1_veg5d")
-SUBSCREEN_RESOLUTIONS = Array[Vector2i]([Vector2i(320, 200)])
-SUB_VIEWPORT_CONTAINER = NodePath("SubViewportContainer")
-
-[node name="SubViewportContainer" type="SubViewportContainer" parent="."]
+[node name="SubscreenContainer" type="SubViewportContainer"]
 offset_right = 40.0
 offset_bottom = 40.0
+stretch = true
+script = ExtResource("1_veg5d")
+metadata/_custom_type_script = "uid://bpm025oe8mtdl"
 
-[node name="RootHandler" type="SubViewport" parent="SubViewportContainer"]
-script = ExtResource("2_jndkm")
+[node name="Background" type="SubViewport" parent="."]
+handle_input_locally = false
+size = Vector2i(40, 40)
+render_target_update_mode = 4
+
+[node name="Sprite2D" type="Sprite2D" parent="Background"]
+texture = ExtResource("2_rdl34")
+
+[node name="Foreground" type="SubViewport" parent="."]
+transparent_bg = true
+handle_input_locally = false
+size = Vector2i(40, 40)
+render_target_update_mode = 4
+
+[node name="Camera3D" type="Camera3D" parent="Foreground"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 2.4106948)
+
+[node name="Hand" parent="Foreground" instance=ExtResource("2_jndkm")]
