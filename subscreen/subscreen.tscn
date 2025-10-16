@@ -1,16 +1,38 @@
-[gd_scene load_steps=7 format=3 uid="uid://bqkwal15168rq"]
+[gd_scene load_steps=14 format=3 uid="uid://bqkwal15168rq"]
 
 [ext_resource type="Shader" uid="uid://b5q1fay01jwey" path="res://assets/vfx/retro_shader.gdshader" id="1_5botf"]
 [ext_resource type="Script" uid="uid://bpm025oe8mtdl" path="res://subscreen/subscreen.gd" id="1_veg5d"]
 [ext_resource type="PackedScene" uid="uid://xntl8ohpl6vh" path="res://objects/hand/hand.tscn" id="2_jndkm"]
-[ext_resource type="Texture2D" uid="uid://cma5r4g8kyj0i" path="res://icon.svg" id="2_rdl34"]
 [ext_resource type="Texture2D" uid="uid://byk45p4yqhxyh" path="res://assets/vfx/dither_pattern.png" id="2_ui1rh"]
+[ext_resource type="Script" uid="uid://drbyersltoi1h" path="res://subscreen/camera_3d.gd" id="4_gdk2a"]
+[ext_resource type="PackedScene" uid="uid://ddw57pfo6lhv3" path="res://objects/bodies/sun/sun.tscn" id="4_ui1rh"]
+[ext_resource type="Script" uid="uid://buhoyj8q17bh1" path="res://subscreen/mesh_instance_3d_2.gd" id="6_84uau"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_ui1rh"]
 shader = ExtResource("1_5botf")
 shader_parameter/STEPS = 4
 shader_parameter/BACKGROUND_COLOR = Color(0.03137255, 0.0627451, 0.0627451, 1)
 shader_parameter/DITHER_TEXTURE = ExtResource("2_ui1rh")
+
+[sub_resource type="Gradient" id="Gradient_gdk2a"]
+colors = PackedColorArray(0.1764706, 1, 1, 1, 0.009643768, 0.13395655, 0.047170967, 1)
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_84uau"]
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_ti7cy"]
+noise = SubResource("FastNoiseLite_84uau")
+color_ramp = SubResource("Gradient_gdk2a")
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_gdk2a"]
+albedo_color = Color(0.1764706, 1, 1, 1)
+albedo_texture = SubResource("NoiseTexture2D_ti7cy")
+emission_enabled = true
+emission = Color(0.11764706, 1, 1, 1)
+emission_energy_multiplier = 0.1
+
+[sub_resource type="SphereMesh" id="SphereMesh_84uau"]
+material = SubResource("StandardMaterial3D_gdk2a")
+radius = 0.4
 
 [node name="Subscreen" type="SubViewportContainer"]
 material = SubResource("ShaderMaterial_ui1rh")
@@ -25,8 +47,17 @@ handle_input_locally = false
 size = Vector2i(40, 40)
 render_target_update_mode = 4
 
-[node name="Sprite2D" type="Sprite2D" parent="Background"]
-texture = ExtResource("2_rdl34")
+[node name="Camera3D" type="Camera3D" parent="Background"]
+transform = Transform3D(1, 0, 0, 0, -4.371139e-08, 1, 0, -1, -4.371139e-08, 0, 10, 0)
+fov = 50.0
+script = ExtResource("4_gdk2a")
+
+[node name="Sun" parent="Background" instance=ExtResource("4_ui1rh")]
+
+[node name="MeshInstance3D2" type="MeshInstance3D" parent="Background/Sun"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -1.8274536)
+mesh = SubResource("SphereMesh_84uau")
+script = ExtResource("6_84uau")
 
 [node name="Foreground" type="SubViewport" parent="."]
 transparent_bg = true
@@ -35,7 +66,7 @@ size = Vector2i(40, 40)
 render_target_update_mode = 4
 
 [node name="Camera3D" type="Camera3D" parent="Foreground"]
-transform = Transform3D(1, 0, 0, 0, -4.371139e-08, 1, 0, -1, -4.371139e-08, 0, 15, 0)
+transform = Transform3D(1, 0, 0, 0, -4.371139e-08, 1, 0, -1, -4.371139e-08, 0, 15, 20)
 fov = 20.0
 
 [node name="Hand" parent="Foreground" instance=ExtResource("2_jndkm")]

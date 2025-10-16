@@ -1,0 +1,28 @@
+[gd_scene load_steps=5 format=3 uid="uid://ddw57pfo6lhv3"]
+
+[ext_resource type="Script" uid="uid://bfeo71h8si6mk" path="res://objects/bodies/body.gd" id="1_duq0w"]
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_duq0w"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_duq0w"]
+shading_mode = 0
+albedo_color = Color(1, 0.9647059, 0.5372549, 1)
+
+[sub_resource type="SphereMesh" id="SphereMesh_duq0w"]
+material = SubResource("StandardMaterial3D_duq0w")
+
+[node name="Sun" type="Area3D"]
+script = ExtResource("1_duq0w")
+metadata/_custom_type_script = "uid://bfeo71h8si6mk"
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+shape = SubResource("SphereShape3D_duq0w")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+mesh = SubResource("SphereMesh_duq0w")
+
+[node name="OmniLight3D" type="OmniLight3D" parent="."]
+light_energy = 1.993
+light_size = 0.021
+omni_range = 5.821
+omni_attenuation = 2.0

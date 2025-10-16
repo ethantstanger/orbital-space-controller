@@ -1,8 +1,7 @@
 extends Node
 
 const RESOLUTIONS: Array[Vector2i] = [
-	Vector2i(320, 180),
-	Vector2i(320, 200),
+	Vector2i(720, 450),
 ]
 
 signal update_resolution(RESOLUTION: Vector2i)
