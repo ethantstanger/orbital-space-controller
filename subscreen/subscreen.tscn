@@ -1,10 +1,11 @@
-[gd_scene load_steps=14 format=3 uid="uid://bqkwal15168rq"]
+[gd_scene load_steps=15 format=3 uid="uid://bqkwal15168rq"]
 
 [ext_resource type="Shader" uid="uid://b5q1fay01jwey" path="res://assets/vfx/retro_shader.gdshader" id="1_5botf"]
 [ext_resource type="Script" uid="uid://bpm025oe8mtdl" path="res://subscreen/subscreen.gd" id="1_veg5d"]
 [ext_resource type="PackedScene" uid="uid://xntl8ohpl6vh" path="res://objects/hand/hand.tscn" id="2_jndkm"]
 [ext_resource type="Texture2D" uid="uid://byk45p4yqhxyh" path="res://assets/vfx/dither_pattern.png" id="2_ui1rh"]
 [ext_resource type="Script" uid="uid://drbyersltoi1h" path="res://subscreen/camera_3d.gd" id="4_gdk2a"]
+[ext_resource type="Script" uid="uid://det72tkf60w0f" path="res://subscreen/node_3d.gd" id="4_ti7cy"]
 [ext_resource type="PackedScene" uid="uid://ddw57pfo6lhv3" path="res://objects/bodies/sun/sun.tscn" id="4_ui1rh"]
 [ext_resource type="Script" uid="uid://buhoyj8q17bh1" path="res://subscreen/mesh_instance_3d_2.gd" id="6_84uau"]
 
@@ -33,6 +34,7 @@ emission_energy_multiplier = 0.1
 [sub_resource type="SphereMesh" id="SphereMesh_84uau"]
 material = SubResource("StandardMaterial3D_gdk2a")
 radius = 0.4
+height = 0.8
 
 [node name="Subscreen" type="SubViewportContainer"]
 material = SubResource("ShaderMaterial_ui1rh")
@@ -42,31 +44,24 @@ stretch = true
 script = ExtResource("1_veg5d")
 metadata/_custom_type_script = "uid://bpm025oe8mtdl"
 
-[node name="Background" type="SubViewport" parent="."]
+[node name="SubViewport" type="SubViewport" parent="."]
 handle_input_locally = false
 size = Vector2i(40, 40)
 render_target_update_mode = 4
 
-[node name="Camera3D" type="Camera3D" parent="Background"]
-transform = Transform3D(1, 0, 0, 0, -4.371139e-08, 1, 0, -1, -4.371139e-08, 0, 10, 0)
+[node name="Node3D" type="Node3D" parent="SubViewport"]
+script = ExtResource("4_ti7cy")
+
+[node name="Camera3D" type="Camera3D" parent="SubViewport/Node3D"]
+transform = Transform3D(1, 0, 0, 0, -4.371139e-08, 1, 0, -1, -4.371139e-08, 0, 15, 0)
 fov = 50.0
 script = ExtResource("4_gdk2a")
 
-[node name="Sun" parent="Background" instance=ExtResource("4_ui1rh")]
+[node name="Hand" parent="SubViewport/Node3D/Camera3D" instance=ExtResource("2_jndkm")]
 
-[node name="MeshInstance3D2" type="MeshInstance3D" parent="Background/Sun"]
+[node name="Sun" parent="SubViewport" instance=ExtResource("4_ui1rh")]
+
+[node name="MeshInstance3D2" type="MeshInstance3D" parent="SubViewport/Sun"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -1.8274536)
 mesh = SubResource("SphereMesh_84uau")
 script = ExtResource("6_84uau")
-
-[node name="Foreground" type="SubViewport" parent="."]
-transparent_bg = true
-handle_input_locally = false
-size = Vector2i(40, 40)
-render_target_update_mode = 4
-
-[node name="Camera3D" type="Camera3D" parent="Foreground"]
-transform = Transform3D(1, 0, 0, 0, -4.371139e-08, 1, 0, -1, -4.371139e-08, 0, 15, 20)
-fov = 20.0
-
-[node name="Hand" parent="Foreground" instance=ExtResource("2_jndkm")]

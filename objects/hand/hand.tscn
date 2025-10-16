@@ -13,4 +13,7 @@ script = ExtResource("1_0dbki")
 metadata/_custom_type_script = "uid://c2hq7qmtwnxc1"
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+visible = false
 mesh = SubResource("BoxMesh_0dbki")
+
+[node name="RayCast3D" type="RayCast3D" parent="."]
