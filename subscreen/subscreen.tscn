@@ -1,10 +1,19 @@
-[gd_scene load_steps=4 format=3 uid="uid://bqkwal15168rq"]
+[gd_scene load_steps=7 format=3 uid="uid://bqkwal15168rq"]
 
-[ext_resource type="Script" uid="uid://bpm025oe8mtdl" path="res://subscreen/subscreen_container.gd" id="1_veg5d"]
+[ext_resource type="Shader" uid="uid://b5q1fay01jwey" path="res://assets/vfx/retro_shader.gdshader" id="1_5botf"]
+[ext_resource type="Script" uid="uid://bpm025oe8mtdl" path="res://subscreen/subscreen.gd" id="1_veg5d"]
 [ext_resource type="PackedScene" uid="uid://xntl8ohpl6vh" path="res://objects/hand/hand.tscn" id="2_jndkm"]
 [ext_resource type="Texture2D" uid="uid://cma5r4g8kyj0i" path="res://icon.svg" id="2_rdl34"]
+[ext_resource type="Texture2D" uid="uid://byk45p4yqhxyh" path="res://assets/vfx/dither_pattern.png" id="2_ui1rh"]
 
-[node name="SubscreenContainer" type="SubViewportContainer"]
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_ui1rh"]
+shader = ExtResource("1_5botf")
+shader_parameter/STEPS = 4
+shader_parameter/BACKGROUND_COLOR = Color(0.03137255, 0.0627451, 0.0627451, 1)
+shader_parameter/DITHER_TEXTURE = ExtResource("2_ui1rh")
+
+[node name="Subscreen" type="SubViewportContainer"]
+material = SubResource("ShaderMaterial_ui1rh")
 offset_right = 40.0
 offset_bottom = 40.0
 stretch = true

@@ -1,8 +1,12 @@
-[gd_scene load_steps=3 format=3 uid="uid://xntl8ohpl6vh"]
+[gd_scene load_steps=4 format=3 uid="uid://xntl8ohpl6vh"]
 
 [ext_resource type="Script" uid="uid://c2hq7qmtwnxc1" path="res://objects/hand/hand.gd" id="1_0dbki"]
 
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_0dbki"]
+shading_mode = 0
+
 [sub_resource type="BoxMesh" id="BoxMesh_0dbki"]
+material = SubResource("StandardMaterial3D_0dbki")
 
 [node name="Hand" type="Node3D"]
 script = ExtResource("1_0dbki")
